@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "lorax": {
+    "AngularTask": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -18,7 +18,7 @@
           "builder": "@angular-devkit/build-angular:application",
           "options": {
             "outputPath": {
-              "base": "dist/lorax"
+              "base": "dist/AngularTask"
             },
             "index": "src/index.html",
             "polyfills": [
@@ -99,10 +99,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "buildTarget": "lorax:build:production"
+              "buildTarget": "AngularTask:build:production"
             },
             "development": {
-              "buildTarget": "lorax:build:development"
+              "buildTarget": "AngularTask:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -110,7 +110,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "buildTarget": "lorax:build"
+            "buildTarget": "AngularTask:build"
           }
         },
         "test": {

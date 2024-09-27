@@ -13,7 +13,7 @@ export class AuthService {
   private users = [
     {
       id: 1,
-      username: 'admin@lorax.com',
+      username: 'admin@AngularTask.com',
       password: 'admin',
       firstName: 'Sarah',
       lastName: 'Smith',
