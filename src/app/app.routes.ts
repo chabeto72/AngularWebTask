@@ -38,6 +38,13 @@ export const APP_ROUTE: Route[] = [
             (m) => m.MULTILEVEL_ROUTE
           ),
       },
+      {
+        path: 'task',
+        loadChildren: () =>
+          import('./module-task/module-task.routes').then(
+            (m) => m.MODULE_TASK_ROUTE
+          ),
+      }
     ],
   },
   {

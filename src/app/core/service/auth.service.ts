@@ -15,8 +15,8 @@ export class AuthService {
       id: 1,
       username: 'admin@AngularTask.com',
       password: 'admin',
-      firstName: 'Sarah',
-      lastName: 'Smith',
+      firstName: 'Ariel',
+      lastName: 'Bejarano',
       token: 'admin-token',
     },
   ];

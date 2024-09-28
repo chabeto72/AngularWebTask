@@ -40,7 +40,7 @@ export class SigninComponent
   ngOnInit() {
     this.loginForm = this.formBuilder.group({
       email: [
-        'admin@lorax.com',
+        'admin@AngularTask.com',
         [Validators.required, Validators.email, Validators.minLength(5)],
       ],
       password: ['admin', Validators.required],
@@ -67,7 +67,7 @@ export class SigninComponent
                 this.router.navigate(['/dashboard/main']);
               }
             } else {
-              this.error = 'Invalid Login';
+              this.error = 'Contraseña invalida';
             }
           },
           (error) => {

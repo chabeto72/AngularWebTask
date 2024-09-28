@@ -4,7 +4,6 @@ import { DirectionService, InConfiguration } from '@core';
 import { ConfigService } from '@config';
 import { DOCUMENT } from '@angular/common';
 import { RouterOutlet } from '@angular/router';
-import { RightSidebarComponent } from '../../right-sidebar/right-sidebar.component';
 import { SidebarComponent } from '../../sidebar/sidebar.component';
 import { HeaderComponent } from '../../header/header.component';
 import { UnsubscribeOnDestroyAdapter } from '@shared';
@@ -17,7 +16,6 @@ import { UnsubscribeOnDestroyAdapter } from '@shared';
   imports: [
     HeaderComponent,
     SidebarComponent,
-    RightSidebarComponent,
     BidiModule,
     RouterOutlet,
   ],
