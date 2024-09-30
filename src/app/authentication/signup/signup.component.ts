@@ -50,7 +50,7 @@ export class SignupComponent implements OnInit {
     if (this.loginForm.invalid) {
       return;
     } else {
-      this.router.navigate(['/task']);
+      this.router.navigate(['/dashboard/main']);
     }
   }
 }

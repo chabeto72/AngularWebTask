@@ -17,27 +17,27 @@
                     }
                     <div class="form-group auth-form-group mb-4">
                       <mat-icon matSuffix class="material-icons-outlined auth-page-icon">email</mat-icon>
-                      <input type="email" formControlName="email" class="form-control auth-control" id="email"
-                        placeholder="Email" [ngClass]="{ 'is-invalid': submitted && form['email'].errors }">
-                      @if (submitted && form['email'].errors) {
+                      <input type="documentNumber" formControlName="documentNumber" class="form-control auth-control" id="documentNumber"
+                        placeholder="Numero Documento" [ngClass]="{ 'is-invalid': submitted && form['documentNumber'].errors }">
+                      @if (submitted && form['documentNumber'].errors) {
                       <div class="invalid-feedback">
-                        @if (form['email'].errors['required']) {
-                        <div>Email is required</div>
+                        @if (form['documentNumber'].errors['required']) {
+                        <div>Documento es requerido</div>
                         }
-                        @if (form['email'].errors['email']) {
+                        <!-- @if (form['documentNumber'].errors['email']) {
                         <div>Email must be a valid email address</div>
-                        }
+                        } -->
                       </div>
                       }
                     </div>
                     <div class="form-group auth-form-group mb-4">
                       <mat-icon matSuffix class="material-icons-outlined auth-page-icon">vpn_key</mat-icon>
                       <input type="password" formControlName="password" class="form-control auth-control" id="password"
-                        [ngClass]="{ 'is-invalid': submitted && form['password'].errors }" placeholder="Password" />
+                        [ngClass]="{ 'is-invalid': submitted && form['password'].errors }" placeholder="Contraseña" />
                       @if (submitted && form['password'].errors) {
                       <div class="invalid-feedback">
                         @if (form['password'].errors['required']) {
-                        <div>Password is required</div>
+                        <div>Contraseña es requerida</div>
                         }
                       </div>
                       }

@@ -11,7 +11,6 @@ import { MatSort, MatSortModule } from '@angular/material/sort';
 import { TaskService } from './task.service';
 import { MatMenuModule, MatMenuTrigger } from '@angular/material/menu';
 import { Direction } from '@angular/cdk/bidi';
-import { BreadcrumbComponent } from '@shared/components/breadcrumb/breadcrumb.component';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
@@ -21,13 +20,14 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { FeatherIconsComponent } from '@shared/components/feather-icons/feather-icons.component';
 import { MAT_DATE_LOCALE, MatRippleModule } from '@angular/material/core';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { CreateEditComponent } from './dialogs/create-edit/create-edit.component';
+import { DeleteComponent } from './dialogs/delete/delete.component';
 
 @Component({
   selector: 'app-module-task',
   standalone: true,
   providers: [{ provide: MAT_DATE_LOCALE, useValue: 'en-GB' }],
-  imports: [
-    BreadcrumbComponent,
+  imports: [   
         MatTooltipModule,
         MatButtonModule,
         MatIconModule,
@@ -48,17 +48,12 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 export class ModuleTaskComponent extends UnsubscribeOnDestroyAdapter
 implements OnInit {
 
-  displayedColumns = [
-    'select',
-    'img',
-    'fName',
-    'lName',
-    'email',
-    'gender',
-    'bDate',
-    'mobile',
-    'address',
-    'country',
+  displayedColumns = [    
+    'nombre_asignado',   
+    'nombre_tarea',
+    'estado',
+    'nota',
+    'fecha',    
     'actions',
   ];
   exampleDatabase?: TaskService;
@@ -92,37 +87,37 @@ implements OnInit {
   refresh() {
     this.loadData();
   }
-  // addNew() {
-  //   let tempDirection: Direction;
-  //   if (localStorage.getItem('isRtl') === 'true') {
-  //     tempDirection = 'rtl';
-  //   } else {
-  //     tempDirection = 'ltr';
-  //   }
-  //   const dialogRef = this.dialog.open(FormDialogComponent, {
-  //     data: {
-  //       advanceTable: this.advanceTable,
-  //       action: 'add',
-  //     },
-  //     direction: tempDirection,
-  //   });
-  //   this.subs.sink = dialogRef.afterClosed().subscribe((result) => {
-  //     if (result === 1) {
-  //       // After dialog is closed we're doing frontend updates
-  //       // For add we're just pushing a new row inside DataService
-  //       this.exampleDatabase?.dataChange.value.unshift(
-  //         this.advanceTableService.getDialogData()
-  //       );
-  //       this.refreshTable();
-  //       this.showNotification(
-  //         'snackbar-success',
-  //         'Add Record Successfully...!!!',
-  //         'bottom',
-  //         'center'
-  //       );
-  //     }
-  //   });
-  // }
+  addNew() {
+    let tempDirection: Direction;
+    if (localStorage.getItem('isRtl') === 'true') {
+      tempDirection = 'rtl';
+    } else {
+      tempDirection = 'ltr';
+    }
+    const dialogRef = this.dialog.open(CreateEditComponent, {
+      data: {
+        advanceTable: this.advanceTable,
+        action: 'add',
+      },
+      direction: tempDirection,
+    });
+    this.subs.sink = dialogRef.afterClosed().subscribe((result) => {
+      if (result === 1) {
+        // After dialog is closed we're doing frontend updates
+        // For add we're just pushing a new row inside DataService
+        this.exampleDatabase?.dataChange.value.unshift(
+          this.taskService.getDialogData()
+        );
+        this.refreshTable();
+        this.showNotification(
+          'snackbar-success',
+          'Tarea Registrada...!!!',
+          'bottom',
+          'center'
+        );
+      }
+    });
+  }
   editCall(row: Task) {
     this.id = row.id;
     let tempDirection: Direction;
@@ -131,34 +126,34 @@ implements OnInit {
     } else {
       tempDirection = 'ltr';
     }
-    // const dialogRef = this.dialog.open(FormDialogComponent, {
-    //   data: {
-    //     advanceTable: row,
-    //     action: 'edit',
-    //   },
-    //   direction: tempDirection,
-    // });
-    // this.subs.sink = dialogRef.afterClosed().subscribe((result) => {
-    //   if (result === 1) {
-    //     // When using an edit things are little different, firstly we find record inside DataService by id
-    //     const foundIndex = this.exampleDatabase?.dataChange.value.findIndex(
-    //       (x) => x.id === this.id
-    //     );
-    //     // Then you update that record using data from dialogData (values you enetered)
-    //     if (foundIndex != null && this.exampleDatabase) {
-    //       this.exampleDatabase.dataChange.value[foundIndex] =
-    //         this.taskService.getDialogData();
-    //       // And lastly refresh table
-    //       this.refreshTable();
-    //       this.showNotification(
-    //         'black',
-    //         'Edit Record Successfully...!!!',
-    //         'bottom',
-    //         'center'
-    //       );
-    //     }
-    //   }
-    // });
+    const dialogRef = this.dialog.open(CreateEditComponent, {
+      data: {
+        taskTable: row,
+        action: 'edit',
+      },
+      direction: tempDirection,
+    });
+    this.subs.sink = dialogRef.afterClosed().subscribe((result) => {
+      if (result === 1) {
+        // When using an edit things are little different, firstly we find record inside DataService by id
+        const foundIndex = this.exampleDatabase?.dataChange.value.findIndex(
+          (x) => x.id === this.id
+        );
+        // Then you update that record using data from dialogData (values you enetered)
+        if (foundIndex != null && this.exampleDatabase) {
+          this.exampleDatabase.dataChange.value[foundIndex] =
+            this.taskService.getDialogData();
+          // And lastly refresh table
+          this.refreshTable();
+          this.showNotification(
+            'black',
+            'Edit Record Successfully...!!!',
+            'bottom',
+            'center'
+          );
+        }
+      }
+    });
   }
   deleteItem(row: Task) {
     this.id = row.id;
@@ -168,28 +163,28 @@ implements OnInit {
     } else {
       tempDirection = 'ltr';
     }
-    // const dialogRef = this.dialog.open(DeleteDialogComponent, {
-    //   data: row,
-    //   direction: tempDirection,
-    // });
-    // this.subs.sink = dialogRef.afterClosed().subscribe((result) => {
-    //   if (result === 1) {
-    //     const foundIndex = this.exampleDatabase?.dataChange.value.findIndex(
-    //       (x) => x.id === this.id
-    //     );
-    //     // for delete we use splice in order to remove single object from DataService
-    //     if (foundIndex != null && this.exampleDatabase) {
-    //       this.exampleDatabase.dataChange.value.splice(foundIndex, 1);
-    //       this.refreshTable();
-    //       this.showNotification(
-    //         'snackbar-danger',
-    //         'Delete Record Successfully...!!!',
-    //         'bottom',
-    //         'center'
-    //       );
-    //     }
-    //   }
-    // });
+    const dialogRef = this.dialog.open(DeleteComponent, {
+      data: row,
+      direction: tempDirection,
+    });
+    this.subs.sink = dialogRef.afterClosed().subscribe((result) => {
+      if (result === 1) {
+        const foundIndex = this.exampleDatabase?.dataChange.value.findIndex(
+          (x) => x.id === this.id
+        );
+        // for delete we use splice in order to remove single object from DataService
+        if (foundIndex != null && this.exampleDatabase) {
+          this.exampleDatabase.dataChange.value.splice(foundIndex, 1);
+          this.refreshTable();
+          this.showNotification(
+            'snackbar-danger',
+            'Registro Eliminado...!!!',
+            'bottom',
+            'center'
+          );
+        }
+      }
+    });
   }
   private refreshTable() {
     this.paginator._changePageSize(this.paginator.pageSize);
@@ -323,14 +318,12 @@ export class ExampleDataSource extends DataSource<Task> {
           .slice()
           .filter((advanceTable: Task) => {
             const searchStr = (
-              advanceTable.fName +
-              advanceTable.lName +
-              advanceTable.email +
-              advanceTable.mobile +
-              advanceTable.gender +
-              advanceTable.bDate +
-              advanceTable.address +
-              advanceTable.country
+              advanceTable.nombre_asignado +
+              advanceTable.nombre_tarea +
+              //advanceTable.estado +
+              advanceTable.nota +
+              advanceTable.fecha 
+              
             ).toLowerCase();
             return searchStr.indexOf(this.filter.toLowerCase()) !== -1;
           });
@@ -361,20 +354,20 @@ export class ExampleDataSource extends DataSource<Task> {
         case 'id':
           [propertyA, propertyB] = [a.id, b.id];
           break;
-        case 'fName':
-          [propertyA, propertyB] = [a.fName, b.fName];
+        case 'nombre_asignado':
+          [propertyA, propertyB] = [a.nombre_asignado, b.nombre_asignado];
           break;
-        case 'lName':
-          [propertyA, propertyB] = [a.lName, b.lName];
+        case 'nombre_tarea':
+          [propertyA, propertyB] = [a.nombre_tarea, b.nombre_tarea];
           break;
-        case 'email':
-          [propertyA, propertyB] = [a.email, b.email];
+        // case 'estado':
+        //   [propertyA, propertyB] = [a.estado, b.estado];
+        //   break;
+        case 'nota':
+          [propertyA, propertyB] = [a.nota, b.nota];
           break;
-        case 'address':
-          [propertyA, propertyB] = [a.address, b.address];
-          break;
-        case 'mobile':
-          [propertyA, propertyB] = [a.mobile, b.mobile];
+        case 'fecha':
+          [propertyA, propertyB] = [a.fecha, b.fecha];
           break;
       }
       const valueA = isNaN(+propertyA) ? propertyA : +propertyA;

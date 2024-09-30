@@ -10,7 +10,7 @@ export const ROUTES: RouteInfo[] = [
     submenu: [],
   },
   {
-    path: 'task',
+    path: 'user',
     title: 'Usuarios',
     icon: 'user-check',
     class: '',

@@ -1,0 +1,38 @@
+[
+  {
+    "id": "001",    
+    "nombre": "Ariel Bejarano",
+    "correo": "test@email.com",  
+    "direccion": "cll 7 este # 20-45",
+    "documento": "1234567890",
+    "codigo_rol": "SUP",
+    "rol": "Supervisor"  
+  },
+  {
+    "id": "002",    
+    "nombre": "Antonella Garcia",
+    "correo": "Anto@email.com",  
+    "direccion": "cr 67 # 89-34",
+    "documento": "310888342",
+    "codigo_rol": "EMP",
+    "rol": "Empleado"  
+  },
+  {
+    "id": "003",    
+    "nombre": "Carlos Gonzales",
+    "correo": "carlos@email.com",  
+    "direccion": "cr 89 # 89-34",
+    "documento": "3111892932",
+    "codigo_rol": "ADM",
+    "rol": "Administrador"  
+  },
+  {
+    "id": "003",    
+    "nombre": "Diana vergara",
+    "correo": "diana@email.com",  
+    "direccion": "cr 90 # 88-34",
+    "documento": "3199003243",
+    "codigo_rol": "EMP",
+    "rol": "Empleado"  
+  }
+]

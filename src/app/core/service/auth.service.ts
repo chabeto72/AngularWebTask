@@ -1,7 +1,9 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpResponse } from '@angular/common/http';
-import { BehaviorSubject, Observable, of, throwError } from 'rxjs';
+import { BehaviorSubject, map, Observable, of, throwError } from 'rxjs';
+import { environment } from 'environments/environment';
 import { User } from '../models/user';
+import { RequestResult } from './requestResult';
 
 @Injectable({
   providedIn: 'root',
@@ -13,7 +15,7 @@ export class AuthService {
   private users = [
     {
       id: 1,
-      username: 'admin@AngularTask.com',
+      documentNumber: '1030525189',
       password: 'admin',
       firstName: 'Ariel',
       lastName: 'Bejarano',
@@ -32,27 +34,39 @@ export class AuthService {
     return this.currentUserSubject.value;
   }
 
-  login(username: string, password: string) {
+  login(userDocumentNumber: string, password: string) {
 
-    const user = this.users.find((u) => u.username === username && u.password === password);
+    //const user = this.users.find((u) => u.documentNumber === userDocumentNumber && u.password === password);
 
-    if (!user) {
-      return this.error('Username or password is incorrect');
-    } else {
-      localStorage.setItem('currentUser', JSON.stringify(user));
-      this.currentUserSubject.next(user);
-      return this.ok({
-        id: user.id,
-        username: user.username,
-        firstName: user.firstName,
-        lastName: user.lastName,
-        token: user.token,
-      });
-    }
+    return this.http
+      .get<RequestResult<any>>(`${environment.apiUrl}/user/get-login-password-docummentnumber/${password}/${userDocumentNumber}`)
+      .pipe(
+        map((requestResult) => {
+          // store user details and jwt token in local storage to keep user logged in between page refreshes
+
+          localStorage.setItem('currentUser', JSON.stringify(requestResult.data));
+          this.currentUserSubject.next(requestResult.data);
+          return requestResult;
+        })        
+      );
+
+    // if (!user) {
+    //   return this.error('Usuario y Contraseña incorrectos');
+    // } else {
+    //   localStorage.setItem('currentUser', JSON.stringify(user));
+    //   this.currentUserSubject.next(user);
+    //   return this.ok({
+    //     id: user.id,
+    //     documentNumber: user.documentNumber,
+    //     firstName: user.firstName,
+    //     lastName: user.lastName,
+    //     token: user.token,
+    //   });
+    // }
   }
   ok(body?: {
     id: number;
-    username: string;
+    documentNumber: string;
     firstName: string;
     lastName: string;
     token: string;

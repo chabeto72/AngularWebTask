@@ -1,15 +1,17 @@
 import { Injectable } from '@angular/core';
 import { UnsubscribeOnDestroyAdapter } from '@shared';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, catchError, map, throwError } from 'rxjs';
 import { Task } from './task.model';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { environment } from 'environments/environment';
+import { RequestResult } from '@core/service/requestResult';
 
 @Injectable({
   providedIn: 'root'
 })
 export class TaskService extends UnsubscribeOnDestroyAdapter{
 
-  private readonly API_URL = 'assets/data/advanceTable.json';
+  private readonly API_URL = 'assets/data/taskV1.json';
   isTblLoading = true;
   dataChange: BehaviorSubject<Task[]> = new BehaviorSubject<
   Task[]
@@ -28,38 +30,44 @@ export class TaskService extends UnsubscribeOnDestroyAdapter{
   /** CRUD METHODS */
   getAllAdvanceTables(): void {
     this.subs.sink = this.httpClient
-      .get<Task[]>(this.API_URL)
-      .subscribe(
-        (data) => {
-          this.isTblLoading = false;
-          this.dataChange.next(data);
-        },
-        (error: HttpErrorResponse) => {
-          this.isTblLoading = false;
-          console.log(error.name + ' ' + error.message);
-        }
-      );
-  }
-  addAdvanceTable(advanceTable: Task): void {
-    this.dialogData = advanceTable;
-
-    /*  this.httpClient.post(this.API_URL, advanceTable).subscribe(data => {
-      this.dialogData = advanceTable;
+    .get<RequestResult<Task[]>>(`${environment.apiUrl}/task/get-all`)
+    .subscribe(
+      (request) => {
+        this.isTblLoading = false;
+        this.dataChange.next(request.data);
       },
-      (err: HttpErrorResponse) => {
-     // error code here
-    });*/
+      (error: HttpErrorResponse) => {
+        this.isTblLoading = false;
+        console.log(error.name + ' ' + error.message);
+      }
+    );
   }
-  updateAdvanceTable(advanceTable: Task): void {
+  addAdvanceTable(advanceTable: Task) {
     this.dialogData = advanceTable;
-
-    /* this.httpClient.put(this.API_URL + advanceTable.id, advanceTable).subscribe(data => {
-      this.dialogData = advanceTable;
-    },
-    (err: HttpErrorResponse) => {
-      // error code here
-    }
-  );*/
+    return this.httpClient
+    .post<RequestResult<Task[]>>(`${environment.apiUrl}/task/create`,advanceTable)
+    .pipe(
+      map((requestResult) => {
+        this.isTblLoading = false;
+        advanceTable.id = requestResult.data.id;
+        this.dialogData = advanceTable;
+        return requestResult;
+      }),
+      catchError(this.errorHandler)
+    );
+  }
+  updateAdvanceTable(advanceTable: Task){
+    return this.httpClient
+      .put<RequestResult<Task[]>>(`${environment.apiUrl}/task/update`,advanceTable)
+      .pipe(
+        map((requestResult) => {
+          this.isTblLoading = false;
+          advanceTable.id = requestResult.data.id;
+          this.dialogData = advanceTable;
+          return requestResult;
+        }),
+        catchError(this.errorHandler)
+      );
   }
   deleteAdvanceTable(id: number): void {
     console.log(id);
@@ -71,5 +79,17 @@ export class TaskService extends UnsubscribeOnDestroyAdapter{
          // error code here
       }
     );*/
+  }
+  errorHandler(error:any) {
+    let errorMessage = "";
+    if (error.error instanceof ErrorEvent) {
+      // Get client-side error
+      errorMessage = error.error.message;
+    } else {
+      // Get server-side error
+      errorMessage = `Error Code: ${error.status}\nMessage: ${error.message}`;
+    }
+    console.log(errorMessage);
+    return throwError(errorMessage);
   }
 }

@@ -1,27 +1,29 @@
 import { formatDate } from '@angular/common';
 export class Task {
+
+    // "id_asignado": "2",  
+    // "nombre_asignado": "Sarah Smith",
+    // "nombre_tarea": "Autorizacion",
+    // "estado": true,
+    // "nota": "autorizacion de entrada",  
+    // "fecha": "2024-02-25T14:22:18Z"
   id: number;
-  img: string;
-  fName: string;
-  lName: string;
-  email: string;
-  gender: string;
-  bDate: string;
-  mobile: string;
-  address: string;
-  country: string;
+  id_asignado: number;
+  nombre_asignado: string;
+  nombre_tarea: string;
+  estado: boolean;
+  nota: string;
+  fecha: string;
+ 
   constructor(task: Task) {
     {
-      this.id = task.id || this.getRandomID();
-      this.img = task.img || 'assets/images/user/user1.jpg';
-      this.fName = task.fName || '';
-      this.lName = task.lName || '';
-      this.email = task.email || '';
-      this.gender = task.gender || 'male';
-      this.bDate = formatDate(new Date(), 'yyyy-MM-dd', 'en') || '';
-      this.mobile = task.mobile || '';
-      this.address = task.address || '';
-      this.country = task.country || '';
+      this.id = task.id || this.getRandomID();  
+      this.id_asignado = task.id_asignado || this.getRandomID();
+      this.nombre_asignado = task.nombre_asignado || '';
+      this.nombre_tarea = task.nombre_tarea || '';
+      this.estado = task.estado || false;
+      this.nota = task.nota || '';
+      this.fecha = formatDate(new Date(), 'yyyy-MM-dd', 'en') || ''; 
     }
   }
   public getRandomID(): number {

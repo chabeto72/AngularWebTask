@@ -1,0 +1,28 @@
+[{
+    "id": "1", 
+    "id_asignado": "002",  
+    "nombre_asignado": "Antonella Garcia",
+    "nombre_tarea": "Autorizacion",
+    "estado": true,
+    "nota": "autorizacion de entrada",  
+    "fecha": "2024-02-25T14:22:18Z"
+  },
+  {
+    "id": "2", 
+    "id_asignado": "001",  
+    "nombre_asignado": "Ariel Bejarano",
+    "nombre_tarea": "tarea certificacion",
+    "estado": false,
+    "nota": "certificacion de angular",  
+    "fecha": "2024-06-18T14:22:18Z"
+  },
+  {
+    "id": "3", 
+    "id_asignado": "001",  
+    "nombre_asignado": "Ariel Bejarano",
+    "nombre_tarea": "tarea certificacion",
+    "estado": true,
+    "nota": "curso back",  
+    "fecha": "2024-07-01T14:22:18Z"
+  }
+  ]

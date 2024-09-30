@@ -29,7 +29,7 @@ import { MatTableModule } from '@angular/material/table';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatTooltipModule } from '@angular/material/tooltip';
-import { BreadcrumbComponent } from '../shared/components/breadcrumb/breadcrumb.component';
+
 
 @Component({
     selector: 'app-advance-table',
@@ -37,8 +37,7 @@ import { BreadcrumbComponent } from '../shared/components/breadcrumb/breadcrumb.
     styleUrls: ['./advance-table.component.scss'],
     providers: [{ provide: MAT_DATE_LOCALE, useValue: 'en-GB' }],
     standalone: true,
-    imports: [
-        BreadcrumbComponent,
+    imports: [       
         MatTooltipModule,
         MatButtonModule,
         MatIconModule,

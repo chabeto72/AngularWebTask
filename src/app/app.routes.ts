@@ -26,6 +26,13 @@ export const APP_ROUTE: Route[] = [
           import('./module-task/module-task.routes').then(
             (m) => m.MODULE_TASK_ROUTE
           ),
+      },
+      {
+        path: 'user',
+        loadChildren: () =>
+          import('./module-user/module-user.routes').then(
+            (m) => m.MODULE_USER_ROUTE
+          ),
       }
     ],
   },

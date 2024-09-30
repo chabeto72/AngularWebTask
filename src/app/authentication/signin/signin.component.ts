@@ -39,9 +39,9 @@ export class SigninComponent
   }
   ngOnInit() {
     this.loginForm = this.formBuilder.group({
-      email: [
-        'admin@AngularTask.com',
-        [Validators.required, Validators.email, Validators.minLength(5)],
+      documentNumber: [
+        '1030525189',
+        [Validators.required],
       ],
       password: ['admin', Validators.required],
     });
@@ -54,11 +54,11 @@ export class SigninComponent
     this.submitted = true;
     this.error = '';
     if (this.loginForm.invalid) {
-      this.error = 'Username and Password not valid !';
+      this.error = 'Usuario y contraseña Invalidos !! !';
       return;
     } else {
       this.subs.sink = this.authService
-        .login(this.form['email'].value, this.form['password'].value)
+        .login(this.form['documentNumber'].value, this.form['password'].value)
         .subscribe(
           (res) => {
             if (res) {
