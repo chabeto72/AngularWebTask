@@ -165,10 +165,7 @@ export class CreateEditComponent {
           (res) => {
             
             if (res.success) {
-              // const token = this.authService.currentUserValue.token;
-              // if (token) {
-              //   this.router.navigate(['/dashboard/main']);
-              // }
+             
               this.dialogRef.close(1);
             } else {
               // this.showNotification(
@@ -178,7 +175,7 @@ export class CreateEditComponent {
               //   'center'
               // );
               this.dialogRef.close();
-              //this.error = 'Credenciales Invalidas';
+            
             }
           },
           (error) => {

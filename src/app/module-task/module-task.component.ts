@@ -108,6 +108,7 @@ implements OnInit {
         this.exampleDatabase?.dataChange.value.unshift(
           this.taskService.getDialogData()
         );
+        this.refresh();
         this.refreshTable();
         this.showNotification(
           'snackbar-success',
@@ -144,6 +145,7 @@ implements OnInit {
           this.exampleDatabase.dataChange.value[foundIndex] =
             this.taskService.getDialogData();
           // And lastly refresh table
+          this.refresh();
           this.refreshTable();
           this.showNotification(
             'black',
