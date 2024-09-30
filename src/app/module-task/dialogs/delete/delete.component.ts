@@ -3,7 +3,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MAT_DIALOG_DATA, MatDialogActions, MatDialogClose, MatDialogContent, MatDialogRef, MatDialogTitle } from '@angular/material/dialog';
 import { TaskService } from 'app/module-task/task.service';
 export interface DialogData {
-  id: number;
+  id: string;
   nombre_tarea: string; 
   nombre_asignado: string;
   estado: string;

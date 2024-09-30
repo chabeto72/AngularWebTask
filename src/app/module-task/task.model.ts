@@ -7,7 +7,7 @@ export class Task {
     // "estado": true,
     // "nota": "autorizacion de entrada",  
     // "fecha": "2024-02-25T14:22:18Z"
-  id: number;
+  id: string;
   id_asignado: number;
   nombre_asignado: string;
   nombre_tarea: string;
@@ -17,7 +17,7 @@ export class Task {
  
   constructor(task: Task) {
     {
-      this.id = task.id || this.getRandomID();  
+      this.id = task.id || '';  
       this.id_asignado = task.id_asignado || this.getRandomID();
       this.nombre_asignado = task.nombre_asignado || '';
       this.nombre_tarea = task.nombre_tarea || '';

@@ -59,7 +59,7 @@ implements OnInit {
   exampleDatabase?: TaskService;
   dataSource!: ExampleDataSource;
   selection = new SelectionModel<Task>(true, []);
-  id?: number;
+  id?: string;
   advanceTable?: Task;
 
   breadscrums = [

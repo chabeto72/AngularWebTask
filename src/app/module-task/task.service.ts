@@ -69,16 +69,20 @@ export class TaskService extends UnsubscribeOnDestroyAdapter{
         catchError(this.errorHandler)
       );
   }
-  deleteAdvanceTable(id: number): void {
-    console.log(id);
-
-    /*  this.httpClient.delete(this.API_URL + id).subscribe(data => {
-      console.log(id);
-      },
-      (err: HttpErrorResponse) => {
-         // error code here
-      }
-    );*/
+  deleteAdvanceTable(id: string): void {
+   
+    this.subs.sink = this.httpClient
+      .delete<RequestResult<boolean>>(`${environment.apiUrl}/task/delete/${id}`)
+      .subscribe(
+        (request) => {
+          this.isTblLoading = false;
+          this.dataChange.next(request.data);
+        },
+        (error: HttpErrorResponse) => {
+          this.isTblLoading = false;
+          console.log(error.name + ' ' + error.message);
+        }
+      );
   }
   errorHandler(error:any) {
     let errorMessage = "";
