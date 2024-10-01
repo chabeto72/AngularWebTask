@@ -118,9 +118,7 @@ implements OnInit {
       direction: tempDirection,
     });
     this.subs.sink = dialogRef.afterClosed().subscribe((result) => {
-      if (result === 1) {
-        // After dialog is closed we're doing frontend updates
-        // For add we're just pushing a new row inside DataService
+      if (result === 1) {      
         this.exampleDatabase?.dataChange.value.unshift(
           this.taskService.getDialogData()
         );
@@ -244,7 +242,7 @@ implements OnInit {
     });
     this.showNotification(
       'snackbar-danger',
-      totalSelect + ' Record Delete Successfully...!!!',
+      totalSelect + ' Registro eliminado ...!!!',
       'bottom',
       'center'
     );
@@ -264,24 +262,7 @@ implements OnInit {
         this.dataSource.filter = this.filter.nativeElement.value;
       }
     );
-  }
-  // export table data in excel file
-  // exportExcel() {
-  //   // key name with space add in brackets
-  //   const exportData: Partial<TableElement>[] =
-  //     this.dataSource.filteredData.map((x) => ({
-  //       'First Name': x.fName,
-  //       'Last Name': x.lName,
-  //       Email: x.email,
-  //       Gender: x.gender,
-  //       'Birth Date': formatDate(new Date(x.bDate), 'yyyy-MM-dd', 'en') || '',
-  //       Mobile: x.mobile,
-  //       Address: x.address,
-  //       Country: x.country,
-  //     }));
-
-  //   TableExportUtil.exportToExcel(exportData, 'excel');
-  // }
+  } 
   showNotification(
     colorName: string,
     text: string,

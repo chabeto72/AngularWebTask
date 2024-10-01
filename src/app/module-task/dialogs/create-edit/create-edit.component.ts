@@ -76,8 +76,7 @@ export class CreateEditComponent {
     
     this.taskTableForm = this.createContactForm();  }
   formControl = new UntypedFormControl('', [
-    Validators.required,
-    // Validators.email,
+    Validators.required,    
   ]);
   ngOnInit() {
     this.currentRol = this.authService.currentUserValue.rol;
@@ -92,14 +91,7 @@ export class CreateEditComponent {
       this.selectUser = this.selectDataUser.find(
         (x) => x.id === this.taskTable.id_asignado
       );  
-      this.selected.setValue(this.selectUser?.id);
-      // const moduleCode = this.authService.currentUserValue.moduleCode;
-      // this.selectModule = this.selectDataModule.find(
-      //   (x) => x.codigoDto === moduleCode
-      // );  
-      //this.filterDates.moduleCode=this.selectModule?.codigoDto;
-      // this.selected.setValue(this.selectModule?.idDto);
-      // this.loadData();
+      this.selected.setValue(this.selectUser?.id);      
       
     }); 
   }
@@ -115,20 +107,13 @@ export class CreateEditComponent {
       id: [this.taskTable.id],
       id_asignado: [this.taskTable.id_asignado],
       nombre: [this.taskTable.nombre_asignado],
-      nombre_tarea: [this.taskTable.nombre_tarea, [Validators.required]],
-      // lName: [this.userTable.lName, [Validators.required]],
-      // email: [
-      //   this.userTable.email,
-      //   [Validators.required, Validators.email, Validators.minLength(5)],
-      // ],
+      nombre_tarea: [this.taskTable.nombre_tarea, [Validators.required]],     
       estado: [this.taskTable.estado],
       fecha: [
         formatDate(this.taskTable.fecha, 'yyyy-MM-dd', 'en'),
         [Validators.required],
       ],
-      nota: [this.taskTable.nota],
-      // mobile: [this.userTable.mobile, [Validators.required]],
-      // country: [this.userTable.country],
+      nota: [this.taskTable.nota],    
     });
   }
   optionUserChangeSelected(event: any) {
@@ -156,54 +141,29 @@ export class CreateEditComponent {
       this.confirmEdit();
     } else {
       this.confirmAdd();
-    }
-    // this.userService.addAdvanceTable(
-    //   this.userTableForm.getRawValue()
-    // );
+    }   
   }
   public confirmAdd(): void {
     this.taskTable = this.taskTableForm.getRawValue()
-    // this.advanceTable.rol = this.selectRol.descripcionDto;
-    // this.advanceTable.charge = this.selectCargo.descripcionDto;
-    // this.advanceTable.operationCenter = this.selectCentroOperaciones.descripcionDto;
+   
     this.taskService
         .addAdvanceTable(this.taskTable)
         .subscribe(
           (res) => {
             
-            if (res.success) {
-              // const token = this.authService.currentUserValue.token;
-              // if (token) {
-              //   this.router.navigate(['/dashboard/main']);
-              // }
+            if (res.success) {            
               this.dialogRef.close(1);
-            } else {
-              // this.showNotification(
-              //   'snackbar-warning',
-              //    res.messages,
-              //   'bottom',
-              //   'center'
-              // );
-              this.dialogRef.close();
-              //this.error = 'Credenciales Invalidas';
+            } else {              
+              this.dialogRef.close();          
             }
           },
           (error) => {
-            this.dialogRef.close();  
-            // this.showNotification(
-            //   'snackbar-danger',
-            //   'No se pudo crear el Usuario, Valide con el administrador...!!!',
-            //   'bottom',
-            //   'center'
-            // );         
+            this.dialogRef.close();                   
           }
         );     
   } 
   public confirmEdit(): void {
     this.taskTable = this.taskTableForm.getRawValue()
-    // this.advanceTable.rol = this.selectRol.descripcionDto;
-    // this.advanceTable.charge = this.selectCargo.descripcionDto;
-    // this.advanceTable.operationCenter = this.selectCentroOperaciones.descripcionDto;
     this.taskService
         .updateAdvanceTable(this.taskTable)
         .subscribe(
@@ -212,25 +172,14 @@ export class CreateEditComponent {
             if (res.success) {
              
               this.dialogRef.close(1);
-            } else {
-              // this.showNotification(
-              //   'snackbar-warning',
-              //    res.messages,
-              //   'bottom',
-              //   'center'
-              // );
+            } else {              
               this.dialogRef.close();
             
             }
           },
           (error) => {
             this.dialogRef.close();  
-            // this.showNotification(
-            //   'snackbar-danger',
-            //   'No se pudo crear el Usuario, Valide con el administrador...!!!',
-            //   'bottom',
-            //   'center'
-            // );         
+                   
           }
         );    
   } 

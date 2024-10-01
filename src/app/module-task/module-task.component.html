@@ -100,26 +100,7 @@
                           <div>Por Completar</div>
                           }
                        </mat-cell>
-                  </ng-container>
-                  <!-- <ng-container matColumnDef="gender">
-                    <mat-header-cell *matHeaderCellDef mat-sort-header> Gender
-                    </mat-header-cell>
-                    <mat-cell mat-cell *matCellDef="let row">
-                      <span class="mobile-label">Gender:</span>
-                      @if (row.gender==='male') {
-                      <div>
-                        <span class="badge badge-solid-green">
-                          {{row.gender}}</span>
-                      </div>
-                      }
-                      @if (row.gender==='female') {
-                      <div>
-                        <span class="badge badge-solid-red">
-                          {{row.gender}}</span>
-                      </div>
-                      }
-                    </mat-cell>
-                  </ng-container> -->
+                  </ng-container>                 
                   <ng-container matColumnDef="nota">
                     <mat-header-cell *matHeaderCellDef mat-sort-header [ngClass]="'tbl-col-width-per-40'">Nota</mat-header-cell>
                     <mat-cell *matCellDef="let row" (contextmenu)="onContextMenu($event, row)"

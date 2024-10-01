@@ -63,26 +63,7 @@
                         [checked]="selection.isSelected(row)" [ngClass]="'tbl-checkbox'">
                       </mat-checkbox>
                     </mat-cell>
-                  </ng-container>
-                  <!-- ID Column -->
-                  <!-- <ng-container matColumnDef="id">
-                    <mat-header-cell *matHeaderCellDef mat-sort-header>Id</mat-header-cell>
-                    <mat-cell *matCellDef="let row">{{row.id}}</mat-cell>
-                  </ng-container> -->
-                  <!-- <ng-container matColumnDef="img">
-                    <mat-header-cell mat-header-cell *matHeaderCellDef [ngClass]="'tbl-col-width-per-6'"> Image
-                    </mat-header-cell>
-                    <mat-cell mat-cell *matCellDef="let row" class="table-img tbl-col-width-per-6"> <span
-                        class="mobile-label">Image:</span><img [src]="row.img" />
-                    </mat-cell>
-                  </ng-container> -->
-                  <!-- <ng-container matColumnDef="fName">
-                    <mat-header-cell *matHeaderCellDef mat-sort-header [ngClass]="'tbl-col-width-per-8'">First Name
-                    </mat-header-cell>
-                    <mat-cell *matCellDef="let row" (contextmenu)="onContextMenu($event, row)"
-                      [ngClass]="'tbl-col-width-per-8'">
-                      <span class="mobile-label">First Name:</span>{{row.fName}}</mat-cell>
-                  </ng-container> -->
+                  </ng-container>                
                   <ng-container matColumnDef="nombre">
                     <mat-header-cell *matHeaderCellDef mat-sort-header [ngClass]="'tbl-col-width-per-15'">Nombre
                     </mat-header-cell>
@@ -94,32 +75,7 @@
                     <mat-header-cell *matHeaderCellDef mat-sort-header>Correo</mat-header-cell>
                     <mat-cell *matCellDef="let row" (contextmenu)="onContextMenu($event, row)">
                       <span class="mobile-label">Correo:</span> {{row.correo}}</mat-cell>
-                  </ng-container>
-                  <!-- <ng-container matColumnDef="gender">
-                    <mat-header-cell *matHeaderCellDef mat-sort-header> Gender
-                    </mat-header-cell>
-                    <mat-cell mat-cell *matCellDef="let row">
-                      <span class="mobile-label">Gender:</span>
-                      @if (row.gender==='male') {
-                      <div>
-                        <span class="badge badge-solid-green">
-                          {{row.gender}}</span>
-                      </div>
-                      }
-                      @if (row.gender==='female') {
-                      <div>
-                        <span class="badge badge-solid-red">
-                          {{row.gender}}</span>
-                      </div>
-                      }
-                    </mat-cell>
-                  </ng-container> -->
-                  <!-- <ng-container matColumnDef="bDate">
-                    <mat-header-cell *matHeaderCellDef mat-sort-header>Birth Date</mat-header-cell>
-                    <mat-cell *matCellDef="let row" (contextmenu)="onContextMenu($event, row)">
-                      <span class="mobile-label">Birth Date:</span> {{row.bDate | date: 'MM/dd/yyyy' }}
-                    </mat-cell>
-                  </ng-container> -->
+                  </ng-container>                  
                   <ng-container matColumnDef="documento">
                     <mat-header-cell *matHeaderCellDef mat-sort-header>Documento</mat-header-cell>
                     <mat-cell *matCellDef="let row" (contextmenu)="onContextMenu($event, row)">

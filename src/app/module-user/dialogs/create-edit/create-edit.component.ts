@@ -111,10 +111,7 @@ export class CreateEditComponent {
       this.confirmEdit();
     } else {
       this.confirmAdd();
-    }
-    // this.userService.addAdvanceTable(
-    //   this.userTableForm.getRawValue()
-    // );
+    }   
   }
   public confirmAdd(): void {
     this.userTable = this.userTableForm.getRawValue()
@@ -156,9 +153,6 @@ export class CreateEditComponent {
   } 
   public confirmEdit(): void {
     this.userTable = this.userTableForm.getRawValue()
-    // this.advanceTable.rol = this.selectRol.descripcionDto;
-    // this.advanceTable.charge = this.selectCargo.descripcionDto;
-    // this.advanceTable.operationCenter = this.selectCentroOperaciones.descripcionDto;
     this.userService
         .updateAdvanceTable(this.userTable)
         .subscribe(
@@ -168,24 +162,14 @@ export class CreateEditComponent {
              
               this.dialogRef.close(1);
             } else {
-              // this.showNotification(
-              //   'snackbar-warning',
-              //    res.messages,
-              //   'bottom',
-              //   'center'
-              // );
+              
               this.dialogRef.close();
             
             }
           },
           (error) => {
             this.dialogRef.close();  
-            // this.showNotification(
-            //   'snackbar-danger',
-            //   'No se pudo crear el Usuario, Valide con el administrador...!!!',
-            //   'bottom',
-            //   'center'
-            // );         
+                 
           }
         );    
   } 
