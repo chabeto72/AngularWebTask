@@ -22,6 +22,10 @@ import { MatDialog } from '@angular/material/dialog';
 import { UserService } from './user.service';
 import { CreateEditComponent } from './dialogs/create-edit/create-edit.component';
 import { DeleteComponent } from './dialogs/delete/delete.component';
+import { PERMISSIONS } from '@core/models/permisos.medata';
+import { PermissionsRoles } from '@core/models/permisos.interface';
+import { AuthService } from '@core/service/auth.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-module-user',
@@ -62,10 +66,12 @@ implements OnInit {
   selection = new SelectionModel<User>(true, []);
   id?: number;
   advanceTable?: User;
+  permissionsRol?: PermissionsRoles;
  
   constructor( public httpClient: HttpClient,
     public dialog: MatDialog,
     public userService: UserService,
+    private authService: AuthService,
     private snackBar: MatSnackBar) {
     super();    
   }
@@ -77,11 +83,21 @@ implements OnInit {
   contextMenuPosition = { x: '0px', y: '0px' };
   ngOnInit() {
     this.loadData();
+    this.checkPermission();
   }
   refresh() {
     this.loadData();
   }
   addNew() {
+    if(!this.permissionsRol?.permisos?.add) {
+      Swal.fire({
+        icon: 'info',
+        title: 'No tiene permisos para crear',
+        showConfirmButton: false,
+        timer: 3000
+      });
+      return;
+    }
     let tempDirection: Direction;
     if (localStorage.getItem('isRtl') === 'true') {
       tempDirection = 'rtl';
@@ -113,7 +129,7 @@ implements OnInit {
       }
     });
   }
-  editCall(row: User) {
+  editCall(row: User) {    
     this.id = row.id;
     let tempDirection: Direction;
     if (localStorage.getItem('isRtl') === 'true') {
@@ -152,6 +168,16 @@ implements OnInit {
     });
   }
   deleteItem(row: User) {
+    if(!this.permissionsRol?.permisos?.delete) {
+      Swal.fire({
+        icon: 'info',
+        title: 'No tiene permisos para eliminar',
+        showConfirmButton: false,
+        timer: 3000
+      });
+      return;
+    }
+
     this.id = row.id;
     let tempDirection: Direction;
     if (localStorage.getItem('isRtl') === 'true') {
@@ -263,6 +289,9 @@ implements OnInit {
       horizontalPosition: placementAlign,
       panelClass: colorName,
     });
+  }
+  checkPermission() {
+    this.permissionsRol = PERMISSIONS.find((permissionRol) =>  permissionRol.rol === this.authService.currentUserValue.rol && permissionRol.codeModule === 'task');
   }
 
   // context menu

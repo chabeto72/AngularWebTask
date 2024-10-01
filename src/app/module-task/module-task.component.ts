@@ -22,6 +22,10 @@ import { MAT_DATE_LOCALE, MatRippleModule } from '@angular/material/core';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { CreateEditComponent } from './dialogs/create-edit/create-edit.component';
 import { DeleteComponent } from './dialogs/delete/delete.component';
+import { PERMISSIONS } from '@core/models/permisos.medata';
+import { AuthService } from '@core/service/auth.service';
+import Swal from 'sweetalert2';
+import { PermissionsRoles } from '@core/models/permisos.interface';
 
 @Component({
   selector: 'app-module-task',
@@ -61,6 +65,7 @@ implements OnInit {
   selection = new SelectionModel<Task>(true, []);
   id?: string;
   advanceTable?: Task;
+  permissionsRol?: PermissionsRoles;
 
   breadscrums = [
     {
@@ -72,6 +77,7 @@ implements OnInit {
   constructor( public httpClient: HttpClient,
     public dialog: MatDialog,
     public taskService: TaskService,
+    private authService: AuthService,
     private snackBar: MatSnackBar) {
     super();    
   }
@@ -82,12 +88,22 @@ implements OnInit {
   contextMenu?: MatMenuTrigger;
   contextMenuPosition = { x: '0px', y: '0px' };
   ngOnInit() {
+    this.checkPermission();
     this.loadData();
   }
   refresh() {
     this.loadData();
   }
   addNew() {
+    if(!this.permissionsRol?.permisos?.add) {
+      Swal.fire({
+        icon: 'info',
+        title: 'No tiene permisos para crear',
+        showConfirmButton: false,
+        timer: 3000
+      });
+      return;
+    }
     let tempDirection: Direction;
     if (localStorage.getItem('isRtl') === 'true') {
       tempDirection = 'rtl';
@@ -158,6 +174,15 @@ implements OnInit {
     });
   }
   deleteItem(row: Task) {
+    if(!this.permissionsRol?.permisos?.delete) {
+      Swal.fire({
+        icon: 'info',
+        title: 'No tiene permisos para eliminar',
+        showConfirmButton: false,
+        timer: 3000
+      });
+      return;
+    }
     this.id = row.id;
     let tempDirection: Direction;
     if (localStorage.getItem('isRtl') === 'true') {
@@ -269,6 +294,9 @@ implements OnInit {
       horizontalPosition: placementAlign,
       panelClass: colorName,
     });
+  }
+  checkPermission() {
+    this.permissionsRol = PERMISSIONS.find((permissionRol) =>  permissionRol.rol === this.authService.currentUserValue.rol && permissionRol.codeModule === 'task');
   }
 
   // context menu
