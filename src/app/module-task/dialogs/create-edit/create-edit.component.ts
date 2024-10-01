@@ -10,6 +10,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatSelectModule } from '@angular/material/select';
+import { AuthService } from '@core/service/auth.service';
 import { Task } from 'app/module-task/task.model';
 // import { DialogData } from 'app/advance-table/dialogs/form-dialog/form-dialog.component';
 import { TaskService } from 'app/module-task/task.service';
@@ -43,6 +44,7 @@ export interface DialogData {
   styleUrl: './create-edit.component.scss'
 })
 export class CreateEditComponent {
+  currentRol: string = 'EMP';
   action: string;
   dialogTitle: string;
   taskTableForm: UntypedFormGroup;
@@ -51,11 +53,13 @@ export class CreateEditComponent {
   selectDataUser : User[]=[]; 
   
   selected = new UntypedFormControl('');
+ 
   constructor(
     public dialogRef: MatDialogRef<CreateEditComponent>,
     @Inject(MAT_DIALOG_DATA) public data: DialogData,
     public taskService: TaskService,
     public userService: UserService,
+    private authService: AuthService,
     private fb: UntypedFormBuilder
   ) {
     
@@ -76,7 +80,9 @@ export class CreateEditComponent {
     // Validators.email,
   ]);
   ngOnInit() {
-    this.getModuleData();   
+    this.currentRol = this.authService.currentUserValue.rol;
+    this.getModuleData();  
+    this.checkUserPermissions(); 
        
   }
   public getModuleData(){
@@ -228,5 +234,22 @@ export class CreateEditComponent {
           }
         );    
   } 
+  checkUserPermissions() {
+    switch(this.currentRol){
+      case"EMP":
+      this.taskTableForm.get('nombre_tarea')?.disable();
+      this.taskTableForm.get('nota')?.disable();
+      this.taskTableForm.get('fecha')?.disable();
+      this.taskTableForm.get('id_asignado')?.disable();
+      break;
+      case"SUP":
+      this.taskTableForm.get('nombre_tarea')?.disable();
+      this.taskTableForm.get('nota')?.disable();
+      this.taskTableForm.get('fecha')?.disable();      
+      break;
+      default:
+        break;
+    }  
+  }
 
 }
