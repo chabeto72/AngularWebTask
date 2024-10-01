@@ -10,15 +10,8 @@ export const APP_ROUTE: Route[] = [
     component: MainLayoutComponent,
     canActivate: [AuthGuard],
     children: [
-      { path: '', redirectTo: '/authentication/signin', pathMatch: 'full' },
-      
-      {
-        path: 'advance-table',
-        loadChildren: () =>
-          import('./advance-table/advance-table.routes').then(
-            (m) => m.ADVANCE_TABLE_ROUTE
-          ),
-      },  
+      { path: '', redirectTo: '/authentication/signin', pathMatch: 'full' },      
+       
      
       {
         path: 'task',

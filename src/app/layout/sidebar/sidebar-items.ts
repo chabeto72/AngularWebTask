@@ -1,14 +1,14 @@
 import { RouteInfo } from './sidebar.metadata';
 
 export const ROUTES: RouteInfo[] = [
-    {
-    path: 'advance-table',
-    title: 'MENUITEMS.ADVANCE-TABLE.TEXT',
-    icon: 'trello',
-    class: '',
-    groupTitle: false,
-    submenu: [],
-  },
+  //   {
+  //   path: 'advance-table',
+  //   title: 'MENUITEMS.ADVANCE-TABLE.TEXT',
+  //   icon: 'trello',
+  //   class: '',
+  //   groupTitle: false,
+  //   submenu: [],
+  // },
   {
     path: 'user',
     title: 'Usuarios',

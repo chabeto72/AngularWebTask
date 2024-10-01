@@ -70,7 +70,7 @@ export class CreateEditComponent {
         data.taskTable.nombre_asignado + ' ' + data.taskTable.nombre_tarea;
       this.taskTable = data.taskTable;
     } else {
-      this.dialogTitle = 'New Record';
+      this.dialogTitle = 'Nueva tarea';
       const blankObject = {} as Task;
       this.taskTable = new Task(blankObject);    }
     
