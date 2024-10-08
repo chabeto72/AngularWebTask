@@ -9,8 +9,10 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatSelectModule } from '@angular/material/select';
+import { AuthService } from '@core/service/auth.service';
 import { User } from 'app/module-user/user.model';
 import { UserService } from 'app/module-user/user.service';
+import { invalid } from 'moment';
 export interface DialogData {
   id: number;
   action: string;
@@ -39,13 +41,19 @@ export interface DialogData {
   styleUrl: './create-edit.component.scss'
 })
 export class CreateEditComponent {
+  currentRol: string = 'EMP';
   action: string;
+  saveRol: boolean = true;
   dialogTitle: string;
   userTableForm: UntypedFormGroup;
   userTable: User;
+  selectUser?: User;
+  selectDataUser : User[]=[]; 
+  selected = new UntypedFormControl('');
   constructor(
     public dialogRef: MatDialogRef<CreateEditComponent>,
     @Inject(MAT_DIALOG_DATA) public data: DialogData,
+    private authService: AuthService,
     public userService: UserService,
     private fb: UntypedFormBuilder
   ) {
@@ -84,21 +92,25 @@ export class CreateEditComponent {
       documento: [this.userTable.documento, [Validators.required]],
       codigo_rol: [this.userTable.codigo_rol],
       rol: [this.userTable.rol],
-      direccion: [this.userTable.direccion],
-      // lName: [this.userTable.lName, [Validators.required]],
-      // email: [
-      //   this.userTable.email,
-      //   [Validators.required, Validators.email, Validators.minLength(5)],
-      // ],
-      // gender: [this.userTable.gender],
-      // bDate: [
-      //   formatDate(this.userTable.bDate, 'yyyy-MM-dd', 'en'),
-      //   [Validators.required],
-      // ],
-      // address: [this.userTable.address],
-      // mobile: [this.userTable.mobile, [Validators.required]],
-      // country: [this.userTable.country],
+      direccion: [this.userTable.direccion]     
     });
+  }
+  ngOnInit() {
+    this.currentRol = this.authService.currentUserValue.rol;
+    this.getModuleData();  
+    this.checkUserPermissions(); 
+       
+  }
+  public getModuleData(){
+    this.userService.getAllAdvanceTables();
+    this.userService.dataChange.subscribe( s => {
+      this.selectDataUser = s;
+      this.selectUser = this.selectDataUser.find(
+        (x) => x.id === this.userTable.id
+      );  
+      this.selected.setValue(this.selectUser?.id);      
+      
+    }); 
   }
   submit() {
     // emppty stuff
@@ -173,5 +185,29 @@ export class CreateEditComponent {
           }
         );    
   } 
+  checkUserPermissions() {
+    switch(this.currentRol){
+      case"EMP":
+      this.userTableForm.get('nombre')?.disable();
+      this.userTableForm.get('correo')?.disable();
+      this.userTableForm.get('documento')?.disable();
+      this.userTableForm.get('codigo_rol')?.disable();
+      this.userTableForm.get('rol')?.disable();
+      this.userTableForm.get('direccion')?.disable();
+      this.saveRol = false;  
+      break;
+      case"SUP":
+      this.userTableForm.get('nombre')?.disable();
+      this.userTableForm.get('correo')?.disable();
+      this.userTableForm.get('documento')?.disable();
+      this.userTableForm.get('codigo_rol')?.disable();
+      this.userTableForm.get('rol')?.disable();
+      this.userTableForm.get('direccion')?.disable();  
+      this.saveRol = false;  
+      break;
+      default:
+        break;
+    }  
+  }
 
 }

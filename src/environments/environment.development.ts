@@ -4,7 +4,9 @@
 
 export const environment = {
   production: false,
-  apiUrl: 'http://localhost:5131/api/v1',
+  //apiUrl: 'http://localhost:5131/api/v1',
+  apiUrl: 'https://apibaseclean-amafaca8czcmaxgc.brazilsouth-01.azurewebsites.net/api/v1',
+  
 };
 
 /*

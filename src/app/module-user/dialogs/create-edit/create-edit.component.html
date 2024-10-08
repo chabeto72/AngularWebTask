@@ -1,96 +1,101 @@
 <div class="addContainer">
-    <div class="modalHeader">
-      <div class="editRowModal">
-        <div class="modalHeader clearfix">         
-          <div class="modal-about">
-            {{dialogTitle}}
+  <div class="modalHeader">
+    <div class="editRowModal">
+      <div class="modalHeader clearfix">
+        <div class="modal-about">
+          {{dialogTitle}}
+        </div>
+      </div>
+    </div>
+    <button mat-icon-button (click)="dialogRef.close()" class="modal-close-button" aria-label="Close dialog">
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
+  <div mat-dialog-content>
+    <form class="register-form m-4" [formGroup]="userTableForm" (ngSubmit)="submit">
+      <div class="row">
+        <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
+          <mat-form-field class="example-full-width" appearance="outline">
+            <mat-label>Nombre</mat-label>
+            <input matInput formControlName="nombre">
+            <mat-icon matSuffix class="material-icons-outlined color-icon p-3">face</mat-icon>
+            @if (userTableForm.get('nombre')?.hasError('required')) {
+            <mat-error>
+              Nombre es requerido
+            </mat-error>
+            }
+          </mat-form-field>
+        </div>
+        <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
+          <mat-form-field class="example-full-width" appearance="outline">
+            <mat-label>Correo</mat-label>
+            <input matInput formControlName="correo" required>
+            <mat-icon matSuffix class="material-icons-outlined color-icon p-3">email</mat-icon>
+            @if (userTableForm.get('correo')?.hasError('required') || userTableForm.get('correo')?.touched) {
+            <mat-error>
+              correo invalido
+            </mat-error>
+            }
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
+          <mat-form-field class="example-full-width" appearance="outline">
+            <mat-label>Documento</mat-label>
+            <input matInput formControlName="documento">
+            <mat-icon matSuffix class="material-icons-outlined color-icon p-3">phone</mat-icon>
+            @if (userTableForm.get('documento')?.hasError('required')) {
+            <mat-error>
+              documento es requerido
+            </mat-error>
+            }
+          </mat-form-field>
+        </div>
+        <div class=" col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
+          <mat-form-field class="example-full-width " appearance="outline">
+            <mat-label>Rol</mat-label>
+            <mat-select formControlName="codigo_rol" required>
+              <mat-option [value]="'ADM'">
+                Administrador
+              </mat-option>
+              <mat-option [value]="'SUP'">
+                Supervisor
+              </mat-option>
+              <mat-option [value]="'EMP'">
+                Empleado
+              </mat-option>
+            </mat-select>
+            @if (userTableForm.get('rol')?.hasError('required')) {
+            <mat-error>
+              Rol es requerido
+            </mat-error>
+            }
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 mb-2">
+          <mat-form-field class="example-full-width" appearance="outline">
+            <mat-label>Direccion</mat-label>
+            <textarea matInput formControlName="direccion"></textarea>
+          </mat-form-field>
+        </div>
+      </div>
+      
+      <div class="row">
+        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 mb-2">
+          <div class="example-button-row">
+            @if (saveRol) {
+              <button mat-flat-button color="accent" [disabled]="!userTableForm.valid"
+              (click)="confirmAddEdit()">Guardar</button>
+      
+            }           
+            <button mat-flat-button color="warn" (click)="onNoClick()" tabindex="-1">Cancelar</button>
           </div>
         </div>
       </div>
-      <button mat-icon-button (click)="dialogRef.close()" class="modal-close-button" aria-label="Close dialog">
-        <mat-icon>close</mat-icon>
-      </button>
-    </div>
-    <div mat-dialog-content>
-      <form class="register-form m-4" [formGroup]="userTableForm" (ngSubmit)="submit">
-        <div class="row">
-          <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
-            <mat-form-field class="example-full-width" appearance="outline">
-              <mat-label>Nombre</mat-label>
-              <input matInput formControlName="nombre">
-              <mat-icon matSuffix class="material-icons-outlined color-icon p-3">face</mat-icon>
-              @if (userTableForm.get('nombre')?.hasError('required')) {
-              <mat-error>
-                Nombre es requerido
-              </mat-error>
-              }
-            </mat-form-field>
-          </div>
-          <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
-            <mat-form-field class="example-full-width" appearance="outline">
-              <mat-label>Correo</mat-label>
-              <input matInput formControlName="correo" required>
-              <mat-icon matSuffix class="material-icons-outlined color-icon p-3">email</mat-icon>
-              @if (userTableForm.get('correo')?.hasError('required') || userTableForm.get('correo')?.touched) {
-              <mat-error>
-                correo invalido
-              </mat-error>
-              }
-            </mat-form-field>
-          </div>
-        </div>
-        <div class="row">
-            <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
-              <mat-form-field class="example-full-width" appearance="outline">
-                <mat-label>Documento</mat-label>
-                <input matInput formControlName="documento">
-                <mat-icon matSuffix class="material-icons-outlined color-icon p-3">phone</mat-icon>
-                @if (userTableForm.get('documento')?.hasError('required')) {
-                <mat-error>
-                    documento es requerido
-                </mat-error>
-                }
-              </mat-form-field>
-            </div>
-            <div class=" col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
-              <mat-form-field class="example-full-width " appearance="outline">
-                <mat-label>Rol</mat-label>
-                <mat-select formControlName="codigo_rol" required>
-                  <mat-option [value]="'ADM'">
-                    Administrador
-                  </mat-option>
-                  <mat-option [value]="'SUP'">
-                    Supervisor
-                  </mat-option>
-                  <mat-option [value]="'EMP'">
-                    Empleado
-                  </mat-option>                 
-                </mat-select>
-                @if (userTableForm.get('rol')?.hasError('required')) {
-                <mat-error>
-                 Rol es requerido
-                </mat-error>
-                }
-              </mat-form-field>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 mb-2">
-              <mat-form-field class="example-full-width" appearance="outline">
-                <mat-label>Direccion</mat-label>
-                <textarea matInput formControlName="direccion"></textarea>
-              </mat-form-field>
-            </div>
-          </div>      
-        <div class="row">
-          <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 mb-2">
-            <div class="example-button-row">
-              <button mat-flat-button color="accent" [disabled]="!userTableForm.valid" 
-                (click)="confirmAddEdit()">Guardar</button>
-              <button mat-flat-button color="warn" (click)="onNoClick()" tabindex="-1">Cancelar</button>
-            </div>
-          </div>
-        </div>
-      </form>
-    </div>
+
+    </form>
   </div>
+</div>
